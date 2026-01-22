@@ -1,29 +1,47 @@
-html_content = """<!DOCTYPE html>
+html_content_mobile = """<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Фитнес-клуб "Атлетика"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #1a1a1a;
+            --accent-color: #39FF14;
+            --text-color: #ffffff;
+            --text-muted: #cccccc;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Montserrat', 'Roboto', sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
             line-height: 1.6;
             overflow-x: hidden;
         }
-        h1, h2, h3 {
-            color: #ffffff;
+
+        h1, h2, h3, h4 {
+            color: var(--text-color);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            margin-top: 0;
         }
+
         .accent {
-            color: #39FF14; /* Neon Green */
+            color: var(--accent-color);
         }
+
+        /* --- Header & Nav --- */
         header {
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -33,230 +51,365 @@ html_content = """<!DOCTYPE html>
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
+
         .logo-container {
             display: flex;
             align-items: center;
             gap: 10px;
+            z-index: 1001;
         }
+
         .logo-img {
-            height: 50px;
+            height: 40px;
             width: auto;
         }
+
         .logo-text {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            letter-spacing: 2px;
         }
-        nav a {
-            color: #ffffff;
+
+        /* Desktop Nav */
+        nav.desktop-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav.desktop-nav a {
+            color: var(--text-color);
             text-decoration: none;
-            margin-left: 25px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            font-size: 0.9em;
+            font-weight: 600;
+            font-size: 0.9rem;
             text-transform: uppercase;
+            transition: color 0.3s ease;
         }
-        nav a:hover {
-            color: #39FF14;
+
+        nav.desktop-nav a:hover {
+            color: var(--accent-color);
         }
-        .hero {
-            position: relative;
-            background-color: #000000;
-            height: 90vh;
+
+        /* Mobile Nav Toggle */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Mobile Nav Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.98);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            transition: right 0.4s ease;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             overflow: hidden;
+            /* Background Image */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://loremflickr.com/1920/1080/fitness,gym/all') center/cover no-repeat;
         }
-        /* Abstract background shapes instead of external image for reliability */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #1a1a1a 25%, #000000 25%, #000000 50%, #1a1a1a 50%, #1a1a1a 75%, #000000 75%, #000000 100%);
-            background-size: 40px 40px;
-            opacity: 0.1;
-            z-index: 1;
-        }
+
         .hero-content {
             z-index: 2;
-            animation: slideUp 1.5s ease-out;
             padding: 20px;
+            max-width: 800px;
+            animation: slideUp 1s ease-out;
         }
+
         .hero h1 {
-            font-size: 3.5em;
+            font-size: 3rem;
             margin-bottom: 20px;
+            line-height: 1.2;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
+
         .hero p {
-            font-size: 1.2em;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
+
         .btn {
-            background-color: #39FF14;
-            color: #000000;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
             padding: 15px 40px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
-            border-radius: 30px;
+            border-radius: 50px;
             display: inline-block;
-            transition: all 0.3s ease;
-            border: 2px solid #39FF14;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--accent-color);
         }
+
         .btn:hover {
             background-color: transparent;
-            color: #39FF14;
-            transform: translateY(-3px);
+            color: var(--accent-color);
+            transform: translateY(-5px);
             box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
         }
+
+        /* --- Sections General --- */
         section {
-            padding: 80px 10%;
+            padding: 80px 5%;
         }
+
         .section-title {
             text-align: center;
             margin-bottom: 60px;
-            font-size: 2.5em;
+            font-size: 2.5rem;
             position: relative;
         }
+
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 3px;
-            background-color: #39FF14;
-            margin: 20px auto 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 15px auto 0;
         }
+
+        /* --- Grid Layouts --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
+
+        /* --- Cards --- */
         .card {
             background-color: #252525;
-            padding: 30px;
             border-radius: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
             overflow: hidden;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: #39FF14;
-        }
+
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .card h3 {
-            margin-top: 0;
-            color: #39FF14;
-        }
-        .trainer-card {
-            text-align: center;
-        }
-        .trainer-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: #333;
-            margin: 0 auto 20px;
-            border: 3px solid #39FF14;
+
+        .card-img-top {
+            width: 100%;
+            height: 200px;
             object-fit: cover;
         }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* --- Trainers --- */
+        .trainer-card {
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #333;
+        }
+
+        .trainer-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 30px auto 20px;
+            border: 3px solid var(--accent-color);
+            object-fit: cover;
+        }
+
+        /* --- Contact --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            max-width: 500px;
-            margin: 0 auto;
         }
+
         input, textarea {
+            width: 100%;
             padding: 15px;
-            border-radius: 5px;
+            border-radius: 8px;
             border: 1px solid #444;
             background-color: #333;
             color: #fff;
             font-family: inherit;
+            font-size: 1rem;
         }
+
         input:focus, textarea:focus {
             outline: none;
-            border-color: #39FF14;
+            border-color: var(--accent-color);
         }
+
+        /* --- Footer --- */
         footer {
-            background-color: #000000;
+            background-color: #000;
             text-align: center;
-            padding: 40px;
+            padding: 40px 20px;
             border-top: 1px solid #333;
         }
-        
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Animations --- */
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
+        /* --- Responsive Design (Mobile) --- */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
+            nav.desktop-nav {
+                display: none;
             }
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+
+            .mobile-menu-btn {
+                display: block;
             }
-            nav a {
-                margin: 0;
-            }
+
             .hero h1 {
-                font-size: 2.5em;
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
     <div class="logo-container">
-        <!-- Assuming the logo file is in the same directory -->
         <img src="image_1769108985648137.png" alt="Атлетика" class="logo-img">
         <span class="logo-text">АТЛЕТИКА</span>
     </div>
-    <nav>
+    
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
         <a href="#home">Главная</a>
         <a href="#about">О нас</a>
         <a href="#services">Услуги</a>
         <a href="#trainers">Тренеры</a>
         <a href="#contact">Контакты</a>
     </nav>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#home" onclick="toggleMenu()">Главная</a>
+        <a href="#about" onclick="toggleMenu()">О нас</a>
+        <a href="#services" onclick="toggleMenu()">Услуги</a>
+        <a href="#trainers" onclick="toggleMenu()">Тренеры</a>
+        <a href="#contact" onclick="toggleMenu()">Контакты</a>
+    </div>
 </header>
 
 <section id="home" class="hero">
     <div class="hero-content">
         <h1>АТЛЕТИКА: <span class="accent">ДОСТИГАЙ ВЕРШИН</span></h1>
-        <p>Современный фитнес-клуб с новейшим оборудованием, профессиональными тренерами и атмосферой успеха.</p>
-        <a href="#contact" class="btn">Получить пробную тренировку</a>
+        <p>Твой путь к совершенству начинается здесь.</p>
+        <a href="#contact" class="btn">Записаться сейчас</a>
     </div>
 </section>
 
 <section id="about">
     <h2 class="section-title">О Нас</h2>
-    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-        <p style="font-size: 1.1em; margin-bottom: 20px;">Мы помогаем людям становиться лучше каждый день, укрепляя тело и дух.</p>
-        <p>Клуб "Атлетика" — это больше, чем просто зал. Это сообщество единомышленников, объединенных целью самосовершенствования. Мы создали пространство, где технологии встречаются с комфортом.</p>
+    <div class="grid" style="align-items: center;">
+        <div>
+            <img src="https://loremflickr.com/600/400/gym,interior/all" alt="Интерьер клуба" style="width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+        </div>
+        <div>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                <span class="accent" style="font-size: 1.5rem; font-weight: bold;">01.</span>
+                Мы создали пространство, где каждый найдет мотивацию.
+            </p>
+            <p>Клуб "Атлетика" оснащен премиальной линейкой тренажеров TechnoGym. У нас работает мощная система вентиляции, есть просторные раздевалки и сауны. Мы заботимся о вашем комфорте на каждом этапе тренировки.</p>
+        </div>
     </div>
 </section>
 
@@ -264,86 +417,105 @@ html_content = """<!DOCTYPE html>
     <h2 class="section-title">Наши Услуги</h2>
     <div class="grid">
         <div class="card">
-            <h3>Тренажерный зал</h3>
-            <p>Просторная зона с премиальным оборудованием TechnoGym и Hammer Strength. Кардио-зона с панорамным видом.</p>
+            <img src="https://loremflickr.com/400/300/gym,weights/all" alt="Тренажерный зал" class="card-img-top">
+            <div class="card-body">
+                <h3>Тренажерный зал</h3>
+                <p>Современное оборудование, свободные веса и кардио-зона.</p>
+            </div>
         </div>
         <div class="card">
-            <h3>Групповые программы</h3>
-            <p>Более 30 направлений: Yoga, Pilates, TRX, Zumba, BodyPump. Занятия для любого уровня подготовки.</p>
+            <img src="https://loremflickr.com/400/300/yoga,group/all" alt="Групповые занятия" class="card-img-top">
+            <div class="card-body">
+                <h3>Групповые программы</h3>
+                <p>Йога, пилатес, сайклинг и высокоинтенсивные тренировки.</p>
+            </div>
         </div>
         <div class="card">
-            <h3>Аква-зона</h3>
-            <p>25-метровый бассейн с системой очистки серебром. Зона гидромассажа и детская школа плавания.</p>
-        </div>
-        <div class="card">
-            <h3>SPA & Relax</h3>
-            <p>Финская сауна, турецкий хаммам, массажные кабинеты и фито-бар для восстановления после тренировок.</p>
+            <img src="https://loremflickr.com/400/300/swimming,pool/all" alt="Бассейн" class="card-img-top">
+            <div class="card-body">
+                <h3>Бассейн & SPA</h3>
+                <p>25-метровый бассейн, хаммам и финская сауна.</p>
+            </div>
         </div>
     </div>
 </section>
 
 <section id="trainers">
-    <h2 class="section-title">Команда</h2>
+    <h2 class="section-title">Наши Тренеры</h2>
     <div class="grid">
         <div class="card trainer-card">
-            <div class="trainer-img" style="background: url('https://source.unsplash.com/200x200/?fitness,trainer,man') center/cover;"></div>
-            <h3>Алексей Смирнов</h3>
-            <p class="accent">Старший тренер</p>
-            <p>Специализация: Силовой тренинг, кроссфит.</p>
+            <img src="https://loremflickr.com/300/300/man,fitness,portrait/all" alt="Тренер" class="trainer-img">
+            <h3>Алексей</h3>
+            <p class="accent">Силовой тренинг</p>
         </div>
         <div class="card trainer-card">
-            <div class="trainer-img" style="background: url('https://source.unsplash.com/200x200/?fitness,trainer,woman') center/cover;"></div>
-            <h3>Елена Новикова</h3>
-            <p class="accent">Инструктор йоги</p>
-            <p>Специализация: Хатха-йога, пилатес, стретчинг.</p>
+            <img src="https://loremflickr.com/300/300/woman,fitness,portrait/all" alt="Тренер" class="trainer-img">
+            <h3>Мария</h3>
+            <p class="accent">Йога и Пилатес</p>
         </div>
         <div class="card trainer-card">
-            <div class="trainer-img" style="background: url('https://source.unsplash.com/200x200/?coach,fitness') center/cover;"></div>
-            <h3>Дмитрий Волков</h3>
-            <p class="accent">Тренер по плаванию</p>
-            <p>Специализация: Обучение плаванию, аквааэробика.</p>
+            <img src="https://loremflickr.com/300/300/man,coach,portrait/all" alt="Тренер" class="trainer-img">
+            <h3>Игорь</h3>
+            <p class="accent">Кроссфит</p>
         </div>
     </div>
 </section>
 
 <section id="contact" style="background-color: #1f1f1f;">
     <h2 class="section-title">Контакты</h2>
-    <div class="grid" style="grid-template-columns: 1fr 1fr;">
-        <div>
-            <h3 class="accent">Мы ждем вас</h3>
-            <p>📍 г. Москва, ул. Спортивная, д. 10</p>
-            <p>📞 +7 (999) 000-00-00</p>
-            <p>✉️ info@atletika-club.ru</p>
-            <p>⏰ Пн-Пт: 07:00 - 23:00<br>Сб-Вс: 09:00 - 22:00</p>
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3 class="accent" style="margin-bottom: 30px;">Ждем вас на тренировку</h3>
+            <p>📍 г. Москва, Пресненская наб., 12</p>
+            <p>📞 +7 (495) 123-45-67</p>
+            <p>✉️ hello@atletika-club.ru</p>
+            <div style="margin-top: 30px; width: 100%; height: 200px; background-color: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #666;">Карта (Google Maps Placeholder)</span>
+            </div>
         </div>
         <div>
             <form>
                 <input type="text" placeholder="Ваше имя" required>
-                <input type="tel" placeholder="Телефон" required>
-                <textarea rows="4" placeholder="Сообщение"></textarea>
-                <button type="submit" class="btn" style="border: none; cursor: pointer; width: 100%;">Отправить</button>
+                <input type="tel" placeholder="Номер телефона" required>
+                <textarea rows="5" placeholder="Комментарий"></textarea>
+                <button type="submit" class="btn" style="border: none; cursor: pointer;">Отправить заявку</button>
             </form>
         </div>
     </div>
 </section>
 
 <footer>
-    <p>&copy; 2024 Фитнес-клуб "Атлетика". Все права защищены.</p>
-    <div style="margin-top: 20px;">
-        <a href="#" style="color: #666; text-decoration: none; margin: 0 10px;">Instagram</a>
-        <a href="#" style="color: #666; text-decoration: none; margin: 0 10px;">VKontakte</a>
-        <a href="#" style="color: #666; text-decoration: none; margin: 0 10px;">Telegram</a>
+    <p>&copy; 2024 Фитнес-клуб "Атлетика".</p>
+    <div class="social-links">
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+        <a href="#">VK</a>
     </div>
 </footer>
 
 <script>
-    // Smooth scrolling for anchor links
+    function toggleMenu() {
+        const nav = document.getElementById('mobileNav');
+        const btn = document.querySelector('.mobile-menu-btn');
+        nav.classList.toggle('active');
+        
+        if (nav.classList.contains('active')) {
+            btn.innerHTML = '✕';
+        } else {
+            btn.innerHTML = '☰';
+        }
+    }
+
+    // Smooth scroll fix
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 </script>
@@ -353,6 +525,7 @@ html_content = """<!DOCTYPE html>
 """
 
 with open("fitness_club.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
+    f.write(html_content_mobile)
 
-print("fitness_club.html created.")
+print("fitness_club.html updated with mobile version and images.")
+
