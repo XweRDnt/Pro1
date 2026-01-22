@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -144,8 +144,7 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            /* Background Image */
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://loremflickr.com/1920/1080/fitness,gym/all') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80') center/cover no-repeat;
         }
 
         .hero-content {
@@ -216,6 +215,91 @@
             gap: 30px;
         }
 
+        /* --- About Section Enhanced --- */
+        .about-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .about-intro img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .feature-text h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-text p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         /* --- Cards --- */
         .card {
             background-color: #252525;
@@ -224,6 +308,7 @@
             transition: transform 0.3s;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -246,20 +331,130 @@
             margin-bottom: 15px;
         }
 
-        /* --- Trainers --- */
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.4s;
+            border: 2px solid var(--accent-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .modal-content ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-content ul li::before {
+            content: '✓';
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- Trainers Carousel --- */
+        .trainers-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .trainers-track {
+            display: flex;
+            gap: 30px;
+            animation: scrollTrainers 20s linear infinite;
+        }
+
+        .trainers-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollTrainers {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .trainer-card {
+            min-width: 300px;
             text-align: center;
-            background-color: transparent;
+            background-color: #252525;
             border: 1px solid #333;
+            border-radius: 15px;
+            padding: 30px 20px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .trainer-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
         }
 
         .trainer-img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin: 30px auto 20px;
+            margin: 0 auto 20px;
             border: 3px solid var(--accent-color);
             object-fit: cover;
+        }
+
+        .trainer-card h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .trainer-card .accent {
+            font-size: 0.95rem;
         }
 
         /* --- Contact --- */
@@ -276,6 +471,20 @@
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .map-container {
+            margin-top: 30px;
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         form {
@@ -330,6 +539,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         /* --- Responsive Design (Mobile) --- */
         @media (max-width: 768px) {
             nav.desktop-nav {
@@ -348,6 +562,10 @@
                 font-size: 2rem;
             }
 
+            .about-intro {
+                grid-template-columns: 1fr;
+            }
+
             .contact-container {
                 grid-template-columns: 1fr;
             }
@@ -355,6 +573,14 @@
             .btn {
                 width: 100%;
                 text-align: center;
+            }
+
+            .trainers-track {
+                animation: scrollTrainers 15s linear infinite;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -367,7 +593,6 @@
         <span class="logo-text">АТЛЕТИКА</span>
     </div>
     
-    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="#home">Главная</a>
         <a href="#about">О нас</a>
@@ -376,10 +601,8 @@
         <a href="#contact">Контакты</a>
     </nav>
 
-    <!-- Mobile Menu Button -->
     <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
 
-    <!-- Mobile Nav -->
     <div class="mobile-nav" id="mobileNav">
         <a href="#home" onclick="toggleMenu()">Главная</a>
         <a href="#about" onclick="toggleMenu()">О нас</a>
@@ -399,16 +622,70 @@
 
 <section id="about">
     <h2 class="section-title">О Нас</h2>
-    <div class="grid" style="align-items: center;">
+    <div class="about-intro">
         <div>
-            <img src="https://loremflickr.com/600/400/gym,interior/all" alt="Интерьер клуба" style="width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80" alt="Интерьер клуба">
         </div>
         <div>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;">
-                <span class="accent" style="font-size: 1.5rem; font-weight: bold;">01.</span>
-                Мы создали пространство, где каждый найдет мотивацию.
+            <p style="font-size: 1.3rem; margin-bottom: 25px; font-weight: 600;">
+                <span class="accent" style="font-size: 2rem; font-weight: bold;">АТЛЕТИКА</span> — это не просто фитнес-клуб, это целая философия здорового образа жизни.
             </p>
-            <p>Клуб "Атлетика" оснащен премиальной линейкой тренажеров TechnoGym. У нас работает мощная система вентиляции, есть просторные раздевалки и сауны. Мы заботимся о вашем комфорте на каждом этапе тренировки.</p>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+                С 2015 года мы помогаем тысячам людей достигать своих целей и становиться лучшей версией себя. Наш клуб оснащен премиальными тренажерами TechnoGym последнего поколения, профессиональным кардио-оборудованием и зоной свободных весов площадью более 800 кв.м.
+            </p>
+            <p style="font-size: 1.05rem; line-height: 1.8;">
+                Мощная система климат-контроля, просторные раздевалки премиум-класса, финская и инфракрасная сауны, хаммам и 25-метровый бассейн с современной системой очистки воды — мы создали идеальные условия для ваших тренировок и восстановления.
+            </p>
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-number" data-target="2500">0</div>
+            <div class="stat-label">Активных членов</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" data-target="45">0</div>
+            <div class="stat-label">Сертифицированных тренеров</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" data-target="1200">0</div>
+            <div class="stat-label">Кв.м площади</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" data-target="11">0</div>
+            <div class="stat-label">Лет на рынке</div>
+        </div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon">🏋️</div>
+            <div class="feature-text">
+                <h4>Премиум оборудование</h4>
+                <p>Тренажеры TechnoGym, Hammer Strength и полная линейка свободных весов</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">👥</div>
+            <div class="feature-text">
+                <h4>Персональный подход</h4>
+                <p>Индивидуальные программы тренировок и питания от профессионалов</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🕐</div>
+            <div class="feature-text">
+                <h4>Удобное расписание</h4>
+                <p>Работаем с 6:00 до 24:00 без выходных, более 150 групповых занятий в неделю</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🧘</div>
+            <div class="feature-text">
+                <h4>SPA & Wellness</h4>
+                <p>Массажные кабинеты, криосауна, зона релаксации и кислородные коктейли</p>
+            </div>
         </div>
     </div>
 </section>
@@ -416,22 +693,22 @@
 <section id="services" style="background-color: #1f1f1f;">
     <h2 class="section-title">Наши Услуги</h2>
     <div class="grid">
-        <div class="card">
-            <img src="https://loremflickr.com/400/300/gym,weights/all" alt="Тренажерный зал" class="card-img-top">
+        <div class="card" onclick="openModal('gym')">
+            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=80" alt="Тренажерный зал" class="card-img-top">
             <div class="card-body">
                 <h3>Тренажерный зал</h3>
                 <p>Современное оборудование, свободные веса и кардио-зона.</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://loremflickr.com/400/300/yoga,group/all" alt="Групповые занятия" class="card-img-top">
+        <div class="card" onclick="openModal('group')">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80" alt="Групповые занятия" class="card-img-top">
             <div class="card-body">
                 <h3>Групповые программы</h3>
                 <p>Йога, пилатес, сайклинг и высокоинтенсивные тренировки.</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://loremflickr.com/400/300/swimming,pool/all" alt="Бассейн" class="card-img-top">
+        <div class="card" onclick="openModal('pool')">
+            <img src="https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?w=600&q=80" alt="Бассейн" class="card-img-top">
             <div class="card-body">
                 <h3>Бассейн & SPA</h3>
                 <p>25-метровый бассейн, хаммам и финская сауна.</p>
@@ -440,86 +717,86 @@
     </div>
 </section>
 
+<!-- Modals -->
+<div id="gymModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('gym')">&times;</span>
+        <h3>Тренажерный зал</h3>
+        <p>Наш тренажерный зал — это 800 кв.м профессионального оборудования и возможностей для достижения ваших целей.</p>
+        <ul>
+            <li>Полная линейка тренажеров TechnoGym и Hammer Strength</li>
+            <li>Зона свободных весов с гантелями до 60 кг</li>
+            <li>Функциональная зона с TRX, battle ropes, медболы</li>
+            <li>Кардио-зона с беговыми дорожками, эллипсами, велотренажерами</li>
+            <li>Зона стретчинга и восстановления</li>
+            <li>Бесплатные полотенца и питьевая вода</li>
+        </ul>
+        <p style="margin-top: 20px; color: var(--text-muted);">Режим работы: 6:00 - 24:00 ежедневно</p>
+    </div>
+</div>
+
+<div id="groupModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('group')">&times;</span>
+        <h3>Групповые программы</h3>
+        <p>Более 150 групповых тренировок в неделю по самым популярным направлениям фитнеса.</p>
+        <ul>
+            <li>Йога (Хатха, Виньяса, Айенгара, Кундалини)</li>
+            <li>Пилатес и стретчинг для гибкости и осанки</li>
+            <li>Сайклинг в специализированной студии</li>
+            <li>HIIT, CrossFit и функциональный тренинг</li>
+            <li>Танцевальные направления (Зумба, Dance Mix)</li>
+            <li>Силовые классы (Body Pump, Power Class)</li>
+            <li>Aqua-аэробика в бассейне</li>
+        </ul>
+        <p style="margin-top: 20px; color: var(--text-muted);">Занятия проводят сертифицированные инструкторы с опытом от 5 лет</p>
+    </div>
+</div>
+
+<div id="poolModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('pool')">&times;</span>
+        <h3>Бассейн & SPA</h3>
+        <p>Водная зона и SPA-комплекс для полного восстановления после тренировок.</p>
+        <ul>
+            <li>25-метровый бассейн с 6 дорожками</li>
+            <li>Современная система озонирования и очистки воды</li>
+            <li>Детский бассейн для юных спортсменов</li>
+            <li>Финская сауна с панорамным остеклением</li>
+            <li>Хаммам (турецкая баня) с мраморными лежаками</li>
+            <li>Инфракрасная сауна и криосауна</li>
+            <li>Зона релаксации с шезлонгами</li>
+            <li>Массажные кабинеты (спортивный, расслабляющий, тайский массаж)</li>
+        </ul>
+        <p style="margin-top: 20px; color: var(--text-muted);">Температура воды 27-28°C, регулярные занятия по аквааэробике и плаванию</p>
+    </div>
+</div>
+
 <section id="trainers">
     <h2 class="section-title">Наши Тренеры</h2>
-    <div class="grid">
-        <div class="card trainer-card">
-            <img src="https://loremflickr.com/300/300/man,fitness,portrait/all" alt="Тренер" class="trainer-img">
-            <h3>Алексей</h3>
-            <p class="accent">Силовой тренинг</p>
-        </div>
-        <div class="card trainer-card">
-            <img src="https://loremflickr.com/300/300/woman,fitness,portrait/all" alt="Тренер" class="trainer-img">
-            <h3>Мария</h3>
-            <p class="accent">Йога и Пилатес</p>
-        </div>
-        <div class="card trainer-card">
-            <img src="https://loremflickr.com/300/300/man,coach,portrait/all" alt="Тренер" class="trainer-img">
-            <h3>Игорь</h3>
-            <p class="accent">Кроссфит</p>
-        </div>
-    </div>
-</section>
-
-<section id="contact" style="background-color: #1f1f1f;">
-    <h2 class="section-title">Контакты</h2>
-    <div class="contact-container">
-        <div class="contact-info">
-            <h3 class="accent" style="margin-bottom: 30px;">Ждем вас на тренировку</h3>
-            <p>📍 г. Москва, Пресненская наб., 12</p>
-            <p>📞 +7 (495) 123-45-67</p>
-            <p>✉️ hello@atletika-club.ru</p>
-            <div style="margin-top: 30px; width: 100%; height: 200px; background-color: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <span style="color: #666;">Карта (Google Maps Placeholder)</span>
+    <div class="trainers-carousel">
+        <div class="trainers-track" id="trainersTrack">
+            <!-- First set -->
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=300&q=80" alt="Тренер" class="trainer-img">
+                <h3>Алексей Волков</h3>
+                <p class="accent">Силовой тренинг</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">КМС по пауэрлифтингу, стаж 12 лет</p>
             </div>
-        </div>
-        <div>
-            <form>
-                <input type="text" placeholder="Ваше имя" required>
-                <input type="tel" placeholder="Номер телефона" required>
-                <textarea rows="5" placeholder="Комментарий"></textarea>
-                <button type="submit" class="btn" style="border: none; cursor: pointer;">Отправить заявку</button>
-            </form>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <p>&copy; 2024 Фитнес-клуб "Атлетика".</p>
-    <div class="social-links">
-        <a href="#">Instagram</a>
-        <a href="#">Telegram</a>
-        <a href="#">VK</a>
-    </div>
-</footer>
-
-<script>
-    function toggleMenu() {
-        const nav = document.getElementById('mobileNav');
-        const btn = document.querySelector('.mobile-menu-btn');
-        nav.classList.toggle('active');
-        
-        if (nav.classList.contains('active')) {
-            btn.innerHTML = '✕';
-        } else {
-            btn.innerHTML = '☰';
-        }
-    }
-
-    // Smooth scroll fix
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-</script>
-
-</body>
-</html>
-
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=300&q=80" alt="Тренер" class="trainer-img">
+                <h3>Мария Соколова</h3>
+                <p class="accent">Йога и Пилатес</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Сертификат RYT-500, стаж 8 лет</p>
+            </div>
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=300&q=80" alt="Тренер" class="trainer-img">
+                <h3>Игорь Петров</h3>
+                <p class="accent">Кроссфит</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">CrossFit Level 2, стаж 10 лет</p>
+            </div>
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?w=300&q=80" alt="Тренер" class="trainer-img">
+                <h3>Анна Смирнова</h3>
+                <p class="accent">Групповые программы</p>
+                <p style="font-size: 0.85rem; color: var(--text
